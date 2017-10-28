@@ -35,6 +35,7 @@ router.param('songId', function (req, res, next, id) {
 });
 
 router.get('/:songId', function (req, res) {
+  console.log('....', req.params)
   res.json(req.song);
 });
 
