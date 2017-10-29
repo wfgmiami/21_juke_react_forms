@@ -15,24 +15,26 @@ class Playlist extends React.Component{
   componentWillReceiveProps(nextProps){
     const nextPlaylistId = nextProps.routeParams.playlistId;
     const currentPlaylistId = this.props.routeParams.playlistId;
-
+console.log(nextProps, this.props)
     if( nextPlaylistId !== currentPlaylistId ){
       this.props.selectPlaylist(nextPlaylistId);
     }
   }
 
   render(){
-    console.log('...playlist', this.props.selectedPlaylist)
+    // console.log('...playlist', this.props.selectedPlaylist)
     const playlist = this.props.selectedPlaylist;
     const allSongs = this.props.allSongs;
     const currentSong = this.props.currentSong;
     const isPlaying = this.props.isPlaying;
     const toggleOne = this.props.toggleOne;
+    const removeSong = this.props.removeSong;
+    const playlistFlag = true;
 
     return(
       <div>
         <h3>{ playlist.name }</h3>
-        <Songs toggleOne={toggleOne} isPlaying={isPlaying} currentSong={currentSong} songs={ playlist.songs } />
+        <Songs playlistFlag={playlistFlag} removeSong={removeSong} toggleOne={toggleOne} isPlaying={isPlaying} currentSong={currentSong} songs={ playlist.songs } />
         { playlist.songs && !playlist.songs.length && <small>No songs.</small> }
 
         <div className="well">

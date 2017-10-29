@@ -29,6 +29,7 @@ export default class AppContainer extends Component {
     this.selectAllSongs = this.selectAllSongs.bind(this);
     this.addPlaylistSongs = this.addPlaylistSongs.bind(this);
     this.submitPlaylistSong = this.submitPlaylistSong.bind(this);
+    this.removeSong = this.removeSong.bind(this);
   }
 
   componentDidMount () {
@@ -186,6 +187,16 @@ export default class AppContainer extends Component {
     .catch( err => this.setState( { playlistSongExists: true }))
   }
 
+  removeSong(songId) {
+    const currentPlaylistId = this.state.selectedPlaylist.id;
+
+    const newPlaylist = this.state.selectedPlaylist.songs.filter( song => song.id !== songId*1 );
+
+    axios.delete(`/api/playlists/${currentPlaylistId}/songs/${songId}`)
+    .then( () => this.selectPlaylist( currentPlaylistId ))
+    .catch( err => console.log('Error in removeSong'))
+  }
+
   render () {
 
     const props = Object.assign({}, this.state, {
@@ -197,7 +208,8 @@ export default class AppContainer extends Component {
       selectPlaylist: this.selectPlaylist,
       selectAllSongs: this.selectAllSongs,
       addPlaylistSongs: this.addPlaylistSongs,
-      submitPlaylistSong:this.submitPlaylistSong
+      submitPlaylistSong:this.submitPlaylistSong,
+      removeSong: this.removeSong
     });
 
     // console.log('...', this.state)
